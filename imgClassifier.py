@@ -77,7 +77,7 @@ class imgClassifier(object):
                 bestClin, bestCrbf, bestG = c, c, g
                 acclin, accrbf = 0, 0
                 evaluations[key] = ([], [])
-                print key
+                if self.loud: print "Training Models for ", key
                 for i in range(-4,5):
                     newC = c*(10**(i*3))
                     pmlin = svm_parameter("-q -t 0 -c "+ str(newC))
@@ -96,12 +96,13 @@ class imgClassifier(object):
                         pmrbf = svm_parameter("-q -t 1 -m 800 -c "+ str(newC) + " -g "+ str(newG))
                         mdrbf = svm_train(pb, pmrbf)
                         label, acc, val = svm_predict(testlabels, testData, mdrbf, '-q')
-                        print newC, newG, acc[0]
+                        #print newC, newG, acc[0]
                         #evaluations[key][1][i][1].append((newG, acc[0]))
                         if acc[0] > accrbf:
                             accrbf = acc[0]
                             bestCrbf, bestG = newC, newG
-                print key, bestClin, bestCrbf, bestG
+                if self.loud: print "Best linear Cost, best RBF Cost, best Gamma:"
+                if self.loud: print bestClin, bestCrbf, bestG
                 
                 pmlin = svm_parameter("-b 1 -q -t 0 -c "+ str(bestClin))
                 pmrbf = svm_parameter("-b 1 -q -t 1 -c "+ str(bestCrbf)+ " -g "+ str(bestG))
