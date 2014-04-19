@@ -40,6 +40,7 @@ class imgClassifier(object):
             if os.path.isfile(key+"_lin.model") and os.path.isfile(key+"_rbf.model"):
                 models[key].append(svm_load_model(key+"_lin.model"))
                 models[key].append(svm_load_model(key+"_rbf.model"))
+                if self.loud: print "Loading existing models for ", key
             else:
                 trainlabels, trainData = [], []
                 testlabels, testData = [], []
