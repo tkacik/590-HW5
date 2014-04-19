@@ -84,7 +84,7 @@ class imgClassifier(object):
                     pmlin = svm_parameter("-q -t 0 -c "+ str(newC))
                     mdlin = svm_train(pb, pmlin)
                     label, acc, val = svm_predict(testlabels, testData, mdlin, '-q')
-                    print newC, acc[0]
+                    if self.loud: print newC, acc[0]
                     #evaluations[key][0].append((newC, acc[0]))
                     if acc[0] > acclin:
                         acclin = acc[0]
@@ -97,7 +97,7 @@ class imgClassifier(object):
                         pmrbf = svm_parameter("-q -t 1 -m 800 -c "+ str(newC) + " -g "+ str(newG))
                         mdrbf = svm_train(pb, pmrbf)
                         label, acc, val = svm_predict(testlabels, testData, mdrbf, '-q')
-                        #print newC, newG, acc[0]
+                        if self.loud: print newC, newG, acc[0]
                         #evaluations[key][1][i][1].append((newG, acc[0]))
                         if acc[0] > accrbf:
                             accrbf = acc[0]
