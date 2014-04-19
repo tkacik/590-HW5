@@ -160,43 +160,32 @@ class imgClassifier(object):
    
 if  __name__ =='__main__':
     loud = False
-    m = 2
-    k = 5
-    tune = False
     folder = "images"
     
     if "--help" in sys.argv:
         print """
-        spamClassifier.py by T. J. Tkacik
+        imgClassifier.py by T. J. Tkacik
         
         Accepted flags:
 
         --help    for this help information
         -l        for loud output, default False
-        -f        to select folder, default 'emails'
-        -m        to assign Laplace smoothing m value, default 2
-        -k        to assign minimum observations, default 5
-        -p        to provide the relative path to a email to predict
-               
-        Examples:   spamClassifier.py -l -m 10 -k 10
-                    spamClassifier.py -t -p emails/hamtesting/3110.2004-12-08.GP.spam.txt
-                    spamClassifier.py -l -m 4 -t
+        -f        to select folder, default 'images'
+
+        Example:   imgClassifier.py -l -f images
+        
+        Note:   imgClassifier.py is prone to fail by resulting in a
+                segmentation fault (core dump). Because of this, models
+                that are successfully generated are saved as class_kernal.model
+                files and used in later runs. To retrain the parameters of an 
+                SVM, delete the model files from this directory.
         """
         sys.exit(0)
     
     if "-l" in sys.argv:
         loud = True
-    if "-t" in sys.argv:
-        tune = True
-    if "-m" in sys.argv:
-        m = sys.argv[sys.argv.index("-m")+1]
-    if "-k" in sys.argv:
-        k = sys.argv[sys.argv.index("-k")+1]
     if "-f" in sys.argv:
         folder = sys.argv[sys.argv.index("-f")+1]
 
     classifier = imgClassifier(folder, loud)
-    
-    if "-p" in sys.argv:
-         classifier.predict(sys.argv[sys.argv.index("-p")+1])
-    
+      
